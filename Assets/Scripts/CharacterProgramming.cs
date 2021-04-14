@@ -2,18 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class CharacterProgramming : MonoBehaviour
 {
 
+    //Command List
     public List<string> commands = new List<string>();
-    
 
+    //Jumping Code
+    public LayerMask groundLayers;
+    public SphereCollider col;
     public Vector3 characterStart = Vector3.zero;
-    public Vector3 end = Vector3.zero;
-    public float velocity = 6.0F;
-    public float JumpSpeed = 8.0F;
-    public float gravity = 15.0F;
-    public Vector3 moveDirection = Vector3.zero;
+    private float JumpSpeed = 6.0F;
+
+    Quaternion startRotation;
+
+    //Audio
+    public static AudioSource audioData;
+    public static AudioClip sample;
+    public static AudioClip tick;
+
+
+    //Character
     CharacterController controller;
 
     [SerializeField]
@@ -25,12 +35,23 @@ public class CharacterProgramming : MonoBehaviour
     void Start()
     {
         characterStart = this.gameObject.transform.position;
+        startRotation = transform.rotation;
+
+        playerbody = GetComponent<Rigidbody>();
+        col = GetComponent<SphereCollider>();
+        
+        
+        audioData = GetComponent<AudioSource>();
+        sample = Resources.Load<AudioClip>("sample");
+        tick = Resources.Load<AudioClip>("tick");
     }
 
 
+    void Update()
+    {
+        Vector3 moveDirection = new Vector3(0, 0, 0);
 
-
-
+    }
 
     public void StartScript(List<string> commands)
     {
@@ -48,19 +69,22 @@ public class CharacterProgramming : MonoBehaviour
 
         //Return character to starting position
         transform.position = characterStart;
+        transform.rotation = startRotation;
     }
 
     public IEnumerator runScript(List<string> cmds)
     {
-        //Ensure character is in starting position when the script starts
+        //Ensure character is in starting position and rotation when the script starts
         transform.position = characterStart;
+        transform.rotation = startRotation;
+
 
         foreach (string cmd in cmds)
         {
-
             //Go through all possible command types
             switch (cmd)
             {
+                // MOVEMENT
                 case "PosX":  
                     transform.position += Vector3.right;
                     yield return null;
@@ -78,31 +102,49 @@ public class CharacterProgramming : MonoBehaviour
                     yield return null;
                     break;
                 case "Jump":
+                    playerbody.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
+                    yield return new WaitForSeconds(1);
+                    break;
+                case "Spin":
+                    for(int i = 0; i < 8; i++)
+                    {
+                        transform.Rotate(0, 45F, 0);
+                        yield return new WaitForSeconds(0.1F);
+                    }
                     
+                 
                     yield return null;
                     break;
-                case "rotate90":
+                case "Rotate90":
+                    
+                    
+                    transform.Rotate(0F, 90F, 0F);
                     yield return null;
                     break;
-                case "rotate180":
+                case "Rotate180":
+                    transform.Rotate(0, 180F, 0);
                     yield return null;
                     break;
-                case "rotate270":
+                case "Rotate270":
+                    transform.Rotate(0, 270F, 0);
                     yield return null;
                     break;
-                case "spin":
-                    yield return null;
+
+                // SOUND
+                case "playsound":
+                    audioData.PlayOneShot(sample, 0.7F);
+                    yield return new WaitForSeconds(1.5F); // Wait allows full audio clip to play
+                    break;
+
+                // CONTROL
+                case "wait":
+                    audioData.PlayOneShot(tick, 0.7F);
+                    yield return new WaitForSeconds(5); // Allows full clip to play
                     break;
 
             }
+
+            yield return new WaitForSeconds(1);
         }
     }
-
-
-//    public void OnTriggerEnter(Collider other)
-  //  {
-
-    //}
-
-
 }

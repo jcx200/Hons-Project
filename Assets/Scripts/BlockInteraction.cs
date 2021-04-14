@@ -30,6 +30,8 @@ public class BlockInteraction : MonoBehaviour
     {
         switch (gameObject.name)
         {
+
+            // MOVEMENT BLOCKS
             case "MovePlusX":
                 Debug.Log(name + " added");
                 commands.Add("PosX");
@@ -66,6 +68,31 @@ public class BlockInteraction : MonoBehaviour
                 Debug.Log(name + " added");
                 commands.Add("Rotate270");
                 break;
+
+            // CONTROL BLOCKS
+            case "WaitBlock":
+                Debug.Log(name + " added");
+                commands.Add("wait");
+                break;
+            case "RepeatNextBlock":
+                Debug.Log(name + " added");
+                commands.Add("repeat");
+                break;
+
+
+            // SOUND BLOCK 
+            case "PlaySound":
+                Debug.Log(name + " added");
+                commands.Add("playsound");
+                break;
+
+            // TEXT BLOCK
+            case "DisplayText":
+                Debug.Log(name + " added");
+                commands.Add("shtext");
+                break;
+
+            // START/STOP
             case "StartModel":
                 Debug.Log("Starting script with " + commands.Count + " commands");
                 character.SendMessage("StartScript", commands);
