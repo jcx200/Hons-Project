@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(AudioSource))]
 public class CharacterProgramming : MonoBehaviour
 {
@@ -30,25 +31,35 @@ public class CharacterProgramming : MonoBehaviour
     private Rigidbody playerbody;
 
 
+    //Text
+    public GameObject hwText;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        //Find characters initial state
         characterStart = this.gameObject.transform.position;
         startRotation = transform.rotation;
 
+        //Create RigidBody and collider for the character
         playerbody = GetComponent<Rigidbody>();
         col = GetComponent<SphereCollider>();
         
-        
+        //Get sound clips
         audioData = GetComponent<AudioSource>();
         sample = Resources.Load<AudioClip>("sample");
         tick = Resources.Load<AudioClip>("tick");
+        
+        //Hide Text
+        hwText.SetActive(false);
     }
 
 
     void Update()
     {
+        //Used for Jump command
         Vector3 moveDirection = new Vector3(0, 0, 0);
 
     }
@@ -56,12 +67,14 @@ public class CharacterProgramming : MonoBehaviour
     public void StartScript(List<string> commands)
     {
         //Coroutine allows for script to be paused and allows to run over time. Also allows params to be passed in. Passes in the commands selected as an ArrayList
+        Debug.Log("Starting script");
         StartCoroutine(runScript(commands));
-        Debug.Log("MESSAGE SENT");
+        
     }
 
     public void StopScript(List<string> commands)
     {
+        //Stop Coroutines and clear command list
         StopAllCoroutines();
         Debug.Log("Count Before: " + commands.Count);
         commands.Clear();
@@ -78,7 +91,10 @@ public class CharacterProgramming : MonoBehaviour
         transform.position = characterStart;
         transform.rotation = startRotation;
 
+        //prev_cmd stores the last command at the end of the foreach so RepeatLast can be used
+        string prev_cmd = "";
 
+        //Iterate through commands list
         foreach (string cmd in cmds)
         {
             //Go through all possible command types
@@ -89,42 +105,47 @@ public class CharacterProgramming : MonoBehaviour
                     transform.position += Vector3.right;
                     yield return null;
                     break;
+
                 case "NegX":
                     transform.position += Vector3.left;
                     yield return null;
                     break;
+
                 case "PosZ":
                     transform.position += Vector3.forward;
                     yield return null;
                     break;
+
                 case "NegZ":
                     transform.position += Vector3.back;
                     yield return null;
                     break;
+
                 case "Jump":
                     playerbody.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
                     yield return new WaitForSeconds(1);
                     break;
+
                 case "Spin":
                     for(int i = 0; i < 8; i++)
                     {
+                        //Split into stages so rotation is obvious
                         transform.Rotate(0, 45F, 0);
                         yield return new WaitForSeconds(0.1F);
                     }
-                    
-                 
                     yield return null;
                     break;
+
                 case "Rotate90":
-                    
-                    
                     transform.Rotate(0F, 90F, 0F);
                     yield return null;
                     break;
+
                 case "Rotate180":
                     transform.Rotate(0, 180F, 0);
                     yield return null;
                     break;
+
                 case "Rotate270":
                     transform.Rotate(0, 270F, 0);
                     yield return null;
@@ -142,9 +163,102 @@ public class CharacterProgramming : MonoBehaviour
                     yield return new WaitForSeconds(5); // Allows full clip to play
                     break;
 
+                case "repeat":
+                    StartCoroutine(RepeatLast(prev_cmd));
+                    break;
+
+                case "shtext":
+                    hwText.SetActive(true);
+                    yield return new WaitForSeconds(3);
+                    hwText.SetActive(false);
+                    break;
+
+                    
             }
+            prev_cmd = cmd;
 
             yield return new WaitForSeconds(1);
         }
     }
+
+
+    private IEnumerator RepeatLast(string prev_cmd)
+    {
+        switch (prev_cmd)
+        {
+            // MOVEMENT
+            case "PosX":
+                transform.position += Vector3.right;
+                yield return null;
+                break;
+
+            case "NegX":
+                transform.position += Vector3.left;
+                yield return null;
+                break;
+
+            case "PosZ":
+                transform.position += Vector3.forward;
+                yield return null;
+                break;
+
+            case "NegZ":
+                transform.position += Vector3.back;
+                yield return null;
+                break;
+
+            case "Jump":
+                playerbody.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
+                yield return new WaitForSeconds(1);
+                break;
+
+            case "Spin":
+                for (int i = 0; i < 8; i++)
+                {
+                    transform.Rotate(0, 45F, 0);
+                    yield return new WaitForSeconds(0.1F);
+                }
+                yield return null;
+                break;
+
+            case "Rotate90":
+                transform.Rotate(0F, 90F, 0F);
+                yield return null;
+                break;
+
+            case "Rotate180":
+                transform.Rotate(0, 180F, 0);
+                yield return null;
+                break;
+
+            case "Rotate270":
+                transform.Rotate(0, 270F, 0);
+                yield return null;
+                break;
+
+            // SOUND
+            case "playsound":
+                audioData.PlayOneShot(sample, 0.7F);
+                yield return new WaitForSeconds(1.5F); // Wait allows full audio clip to play
+                break;
+
+            // CONTROL
+            case "wait":
+                audioData.PlayOneShot(tick, 0.7F);
+                yield return new WaitForSeconds(5); // Allows full clip to play
+                break;
+
+            case "shtext":
+                hwText.SetActive(true);
+                yield return new WaitForSeconds(5);
+                hwText.SetActive(false);
+                break;
+
+            default:
+                Debug.Log("Repeat not possible");
+                break;
+        }
+    }
+
+
 }

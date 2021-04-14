@@ -18,16 +18,11 @@ public class BlockInteraction : MonoBehaviour
         character = GameObject.Find("StickFigure");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
 
     public void OnMouseDown()
     {
+
+        //Detect which objects have been interacted with by chacking name and then store a command name in the commands list
         switch (gameObject.name)
         {
 
@@ -74,7 +69,7 @@ public class BlockInteraction : MonoBehaviour
                 Debug.Log(name + " added");
                 commands.Add("wait");
                 break;
-            case "RepeatNextBlock":
+            case "RepeatLast":
                 Debug.Log(name + " added");
                 commands.Add("repeat");
                 break;
@@ -92,20 +87,24 @@ public class BlockInteraction : MonoBehaviour
                 commands.Add("shtext");
                 break;
 
+
+
+
             // START/STOP
+            //Use the SendMessage scripting function to send commands to the class attached to the character to be executed
             case "StartModel":
                 Debug.Log("Starting script with " + commands.Count + " commands");
                 character.SendMessage("StartScript", commands);
                 break;
+
             case "StopModel":
                 character.SendMessage("StopScript", commands);
                 Debug.Log("Script stopped and commands cleared");
                 break;
-            default:
-                Debug.Log("Nothing");
-                //Debug.Log(commands.Count);
-                break;
 
+            default:
+                Debug.Log("Invalid");
+                break;
         }
     }
 
