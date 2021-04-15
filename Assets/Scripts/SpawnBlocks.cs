@@ -6,12 +6,6 @@ using UnityEngine.UI;
 public class SpawnBlocks : MonoBehaviour
 {
 
-    MeshRenderer meshrenderer;
-    public Material Control;
-    public Material Movement;
-    public Material Sound;
-    public Material Text;
-
     public List<GameObject> Blocks;
     public List<Text> BlockText;
 
@@ -47,7 +41,6 @@ public class SpawnBlocks : MonoBehaviour
             {
                 case "PosX":
                     BlockText[i].text = "Move +X";
-                    Blocks[i].GetComponent<Renderer>().material = Movement;
                     break;
 
                 case "NegX":
