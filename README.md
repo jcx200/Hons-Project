@@ -1,7 +1,7 @@
 # Hons-Project
 
 
-**Controls
+**Controls**
 
 * W = Forward
 * A = Left
