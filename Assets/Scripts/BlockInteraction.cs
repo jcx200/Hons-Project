@@ -10,14 +10,12 @@ public class BlockInteraction : MonoBehaviour
     //List to store selected commands in. Static modifier means that only one instance of the list exists.
     public static List<string> commands = new List<string>();
     GameObject character;
-    GameObject BlankBlocks;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         //Find the controllable character
         character = GameObject.Find("StickFigure");
-        BlankBlocks = GameObject.Find("BlankBlocks");
     }
 
 
@@ -89,17 +87,17 @@ public class BlockInteraction : MonoBehaviour
                 commands.Add("shtext");
                 break;
 
+
+
+
             // START/STOP
             //Use the SendMessage scripting function to send commands to the class attached to the character to be executed
             case "StartModel":
-
                 Debug.Log("Starting script with " + commands.Count + " commands");
-                BlankBlocks.SendMessage("SpawnCommands", commands);
                 character.SendMessage("StartScript", commands);
                 break;
 
             case "StopModel":
-                BlankBlocks.SendMessage("DestroyCommands", commands);
                 character.SendMessage("StopScript", commands);
                 Debug.Log("Script stopped and commands cleared");
                 break;
@@ -108,7 +106,22 @@ public class BlockInteraction : MonoBehaviour
                 Debug.Log("Invalid");
                 break;
         }
-
     }
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
 
 }

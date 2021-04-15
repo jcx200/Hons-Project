@@ -242,6 +242,11 @@ public class CharacterProgramming : MonoBehaviour
                 yield return new WaitForSeconds(1.5F); // Wait allows full audio clip to play
                 break;
 
+            // CONTROL
+            case "wait":
+                audioData.PlayOneShot(tick, 0.7F);
+                yield return new WaitForSeconds(5); // Allows full clip to play
+                break;
 
             case "shtext":
                 hwText.SetActive(true);
@@ -253,7 +258,6 @@ public class CharacterProgramming : MonoBehaviour
                 Debug.Log("Repeat not possible");
                 break;
         }
-        yield return new WaitForSeconds(10);
     }
 
 
