@@ -1,12 +1,12 @@
 # Hons-Project
 
 
-Controls
+**Controls
 
-W = Forward
-A = Left
-S = Back
-D = Right
+* W = Forward
+* A = Left
+* S = Back
+* D = Right
 
 
 Use the left mouse click when hovering over a command block to add the command to the command list. Once you have selected the commands that you wish, press the start button to start execution of the commands
