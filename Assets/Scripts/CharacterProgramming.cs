@@ -14,6 +14,7 @@ public class CharacterProgramming : MonoBehaviour
     public LayerMask groundLayers;
     public SphereCollider col;
     public Vector3 characterStart = Vector3.zero;
+    public Vector3 storedpos = Vector3.zero;
     private float JumpSpeed = 6.0F;
 
     Quaternion startRotation;
@@ -22,7 +23,8 @@ public class CharacterProgramming : MonoBehaviour
     public static AudioSource audioData;
     public static AudioClip sample;
     public static AudioClip tick;
-
+    public static AudioClip sound2;
+    public static AudioClip sound3;
 
     //Character
     CharacterController controller;
@@ -51,6 +53,8 @@ public class CharacterProgramming : MonoBehaviour
         audioData = GetComponent<AudioSource>();
         sample = Resources.Load<AudioClip>("sample");
         tick = Resources.Load<AudioClip>("tick");
+        sound2 = Resources.Load<AudioClip>("sound2");
+        sound3 = Resources.Load<AudioClip>("sound3");
         
         //Hide Text
         hwText.SetActive(false);
@@ -89,7 +93,11 @@ public class CharacterProgramming : MonoBehaviour
     {
         //Ensure character is in starting position and rotation when the script starts
         transform.position = characterStart;
+
+        //Default storedpos as beginning position
+        storedpos = characterStart;
         transform.rotation = startRotation;
+        
 
         //prev_cmd stores the last command at the end of the foreach so RepeatLast can be used
         string prev_cmd = "";
@@ -151,10 +159,19 @@ public class CharacterProgramming : MonoBehaviour
                     yield return null;
                     break;
 
+                case "movetostored":
+                    transform.position = storedpos;
+                    yield return null;
+                    break;
+
                 // SOUND
                 case "playsound":
                     audioData.PlayOneShot(sample, 0.7F);
                     yield return new WaitForSeconds(1.5F); // Wait allows full audio clip to play
+                    break;
+                case "playsound2":
+                    audioData.PlayOneShot(sound2, 0.7F);
+                    yield return new WaitForSeconds(3F);
                     break;
 
                 // CONTROL
@@ -166,6 +183,19 @@ public class CharacterProgramming : MonoBehaviour
                 case "repeat":
                     StartCoroutine(RepeatLast(prev_cmd));
                     break;
+
+                case "repeatX2":
+                    StartCoroutine(RepeatLast(prev_cmd));
+                    yield return new WaitForSeconds(3F);
+                    StartCoroutine(RepeatLast(prev_cmd));
+                    break;
+
+                case "storepos":
+                    storedpos = this.gameObject.transform.position;
+                    audioData.PlayOneShot(sound3, 0.7F);
+                    yield return new WaitForSeconds(1F);
+                    break;
+                // TEXT
 
                 case "shtext":
                     hwText.SetActive(true);
@@ -236,16 +266,23 @@ public class CharacterProgramming : MonoBehaviour
                 yield return null;
                 break;
 
+
+
             // SOUND
             case "playsound":
                 audioData.PlayOneShot(sample, 0.7F);
                 yield return new WaitForSeconds(1.5F); // Wait allows full audio clip to play
                 break;
 
+            case "playsound2":
+                audioData.PlayOneShot(sound2, 0.7F);
+                yield return new WaitForSeconds(5);
+                break;
 
+            // TEXT
             case "shtext":
                 hwText.SetActive(true);
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(3);
                 hwText.SetActive(false);
                 break;
 
@@ -253,7 +290,7 @@ public class CharacterProgramming : MonoBehaviour
                 Debug.Log("Repeat not possible");
                 break;
         }
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(1);
     }
 
 

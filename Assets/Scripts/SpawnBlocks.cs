@@ -82,10 +82,19 @@ public class SpawnBlocks : MonoBehaviour
                     BlockText[i].text = "Rotate 270";
                     break;
 
+                case "movetostored":
+                    BlockText[i].text = "Move to stored position";
+                    break;
+
                 // SOUND
                 case "playsound":
                     BlockText[i].text = "Play Sound";
                     break;
+
+                case "playsound2":
+                    BlockText[i].text = "Play Sound 2";
+                    break;
+
 
                 // CONTROL
                 case "wait":
@@ -96,6 +105,15 @@ public class SpawnBlocks : MonoBehaviour
                     BlockText[i].text = "Repeat Last Block";
                     break;
 
+                case "repeatX2":
+                    BlockText[i].text = "Repeat Last Block Twice";
+                    break;
+
+                case "storepos":
+                    BlockText[i].text = "Store Current Position";
+                    break;
+
+                // TEXT
                 case "shtext":
                     BlockText[i].text = "Display \n" + "\"Hello World \n";
                     break;

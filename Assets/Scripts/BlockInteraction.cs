@@ -65,6 +65,10 @@ public class BlockInteraction : MonoBehaviour
                 Debug.Log(name + " added");
                 commands.Add("Rotate270");
                 break;
+            case "MoveToStoredPos":
+                Debug.Log(name + " added");
+                commands.Add("movetostored");
+                break;
 
             // CONTROL BLOCKS
             case "WaitBlock":
@@ -75,12 +79,23 @@ public class BlockInteraction : MonoBehaviour
                 Debug.Log(name + " added");
                 commands.Add("repeat");
                 break;
-
+            case "RepeatLastX2":
+                Debug.Log(name + " added");
+                commands.Add("repeatX2");
+                break;
+            case "StorePosition":
+                Debug.Log(name + " added");
+                commands.Add("storepos");
+                break;
 
             // SOUND BLOCK 
             case "PlaySound":
                 Debug.Log(name + " added");
                 commands.Add("playsound");
+                break;
+            case "PlaySound2":
+                Debug.Log(name + " added");
+                commands.Add("playsound2");
                 break;
 
             // TEXT BLOCK
