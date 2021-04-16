@@ -135,4 +135,5 @@ public class SpawnBlocks : MonoBehaviour
             BlockText[i].gameObject.SetActive(false);
         }
     }
+
 }
