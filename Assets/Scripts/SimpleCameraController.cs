@@ -46,12 +46,14 @@ namespace UnityTemplateProjects
             public void UpdateTransform(Transform t)
             {
                 t.eulerAngles = new Vector3(pitch, yaw, roll);
-                t.position = new Vector3(x, y, z);
+                t.position = new Vector3(x, 1.5F, z);
             }
         }
         
         CameraState m_TargetCameraState = new CameraState();
         CameraState m_InterpolatingCameraState = new CameraState();
+
+    
 
         [Header("Movement Settings")]
         [Tooltip("Exponential boost factor on translation, controllable by mouse wheel.")]
@@ -98,8 +100,16 @@ namespace UnityTemplateProjects
             return direction;
         }
         
+        void Start()
+        {
+            Screen.lockCursor = true;
+         
+        }
+
         void Update()
         {
+
+
             // Exit Sample  
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -109,29 +119,19 @@ namespace UnityTemplateProjects
 				#endif
             }
 
-            // Hide and lock cursor when right mouse button pressed
-            if (Input.GetMouseButtonDown(1))
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
 
-            // Unlock and show cursor when right mouse button released
-            if (Input.GetMouseButtonUp(1))
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
+         
 
             // Rotation
-            if (Input.GetMouseButton(1))
-            {
+            //if (Input.GetMouseButton(1))
+            //{
                 var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
                 
                 var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
 
                 m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivityFactor;
                 m_TargetCameraState.pitch += mouseMovement.y * mouseSensitivityFactor;
-            }
+            //}
             
             // Translation
             var translation = GetInputTranslationDirection() * Time.deltaTime;

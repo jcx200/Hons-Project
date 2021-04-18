@@ -58,6 +58,7 @@ public class CharacterProgramming : MonoBehaviour
         
         //Hide Text
         hwText.SetActive(false);
+        RenderSettings.fog = false;
     }
 
 
