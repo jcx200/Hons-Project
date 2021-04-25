@@ -42,12 +42,10 @@ public class SpawnBlocks : MonoBehaviour
         {
             Blocks[i].SetActive(true);
 
-
             switch (commands[i])
             {
                 case "PosX":
                     BlockText[i].text = "Move +X";
-                    GetComponent<Renderer>().material = Text;
                     break;
 
                 case "NegX":

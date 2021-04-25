@@ -73,8 +73,7 @@ public class CharacterProgramming : MonoBehaviour
     {
         //Coroutine allows for script to be paused and allows to run over time. Also allows params to be passed in. Passes in the commands selected as an ArrayList
         Debug.Log("Starting script");
-        StartCoroutine(runScript(commands));
-        
+        StartCoroutine(runScript(commands));   
     }
 
     public void StopScript(List<string> commands)
