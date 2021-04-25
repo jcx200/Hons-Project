@@ -6,16 +6,8 @@ using UnityEngine.UI;
 public class SpawnBlocks : MonoBehaviour
 {
 
-    MeshRenderer meshrenderer;
-    public Material Control;
-    public Material Movement;
-    public Material Sound;
-    public Material Text;
-
     public List<GameObject> Blocks;
     public List<Text> BlockText;
-
-    
 
 
     // Start is called before the first frame update
@@ -27,12 +19,6 @@ public class SpawnBlocks : MonoBehaviour
             Blocks[i].SetActive(false);
         }
        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
 

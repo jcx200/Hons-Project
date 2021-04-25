@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlockInteraction : MonoBehaviour
 {
 
     Vector3 startPos;
-  
+
     //List to store selected commands in. Static modifier means that only one instance of the list exists.
     public static List<string> commands = new List<string>();
     GameObject character;
@@ -23,7 +24,6 @@ public class BlockInteraction : MonoBehaviour
 
     public void OnMouseDown()
     {
-
         //Detect which objects have been interacted with by chacking name and then store a command name in the commands list
         switch (gameObject.name)
         {
@@ -123,7 +123,5 @@ public class BlockInteraction : MonoBehaviour
                 Debug.Log("Invalid");
                 break;
         }
-
     }
-
 }
