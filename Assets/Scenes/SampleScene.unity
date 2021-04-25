@@ -3490,10 +3490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ae593b3e98e8b468c2409a7dd52779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Control: {fileID: 2100000, guid: e9ad2accc1abc7046aa0f1aec247cf2c, type: 2}
-  Movement: {fileID: 2100000, guid: f737b07334538de4496b8bd7d4afbb4b, type: 2}
-  Sound: {fileID: 2100000, guid: f8f42ddc3c7772f43af39f69bb1cb196, type: 2}
-  Text: {fileID: 2100000, guid: 509af81aa4c302746a07af6b2220cfa0, type: 2}
   Blocks:
   - {fileID: 822660918}
   - {fileID: 1642080010}
@@ -10813,7 +10809,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.0465e-41, z: 0, w: 2.4375}
+  m_BoundingSphereOverride: {x: 0, y: 2.4736e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -11075,12 +11071,12 @@ PrefabInstance:
     - target: {fileID: 108762345594134268, guid: 96fe51ca2266f2549bb3b93ac7b9eb5b,
         type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 108762345594134268, guid: 96fe51ca2266f2549bb3b93ac7b9eb5b,
         type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 2.5756e-41
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 108762345594134268, guid: 96fe51ca2266f2549bb3b93ac7b9eb5b,
         type: 3}
