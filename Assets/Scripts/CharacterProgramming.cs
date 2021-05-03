@@ -32,10 +32,8 @@ public class CharacterProgramming : MonoBehaviour
     [SerializeField]
     private Rigidbody playerbody;
 
-
     //Text
     public GameObject hwText;
-
 
 
     // Start is called before the first frame update
@@ -66,8 +64,9 @@ public class CharacterProgramming : MonoBehaviour
     {
         //Used for Jump command
         Vector3 moveDirection = new Vector3(0, 0, 0);
-
     }
+
+
 
     public void StartScript(List<string> commands)
     {

@@ -12,6 +12,8 @@ public class BlockInteraction : MonoBehaviour
     public static List<string> commands = new List<string>();
     GameObject character;
     GameObject BlankBlocks;
+
+    public static bool isRunning;
     
     // Start is called before the first frame update
     void Start()
@@ -104,21 +106,38 @@ public class BlockInteraction : MonoBehaviour
                 commands.Add("shtext");
                 break;
 
-            // START/STOP
+            // START/STOP/CLEAR
             //Use the SendMessage scripting function to send commands to the class attached to the character to be executed
             case "StartModel":
-
+                isRunning = true;
                 Debug.Log("Starting script with " + commands.Count + " commands");
                 BlankBlocks.SendMessage("SpawnCommands", commands);
                 character.SendMessage("StartScript", commands);
+
                 break;
 
             case "StopModel":
+                isRunning = false;
                 BlankBlocks.SendMessage("DestroyCommands", commands);
                 character.SendMessage("StopScript", commands);
                 Debug.Log("Script stopped and commands cleared");
                 break;
 
+            case "ClearLast":
+                if (isRunning)
+                {
+                    Debug.Log("Script Is Being Executed. It is not possible to clear a command at this time");
+                }
+                else
+                {
+                    if (commands.Count != 0)
+                    {
+                        commands.RemoveAt(commands.Count - 1);
+                        Debug.Log("Command cleared");
+                    }
+                }
+               
+                break;
             default:
                 Debug.Log("Invalid");
                 break;
